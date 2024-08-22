@@ -1,22 +1,36 @@
+import { createContext, useContext } from "react";
+import { useState } from "react";
+import { CartContext } from "../contexts/cart.contexts";
+
 const CartValue = () => {
-  const Calculate = () => {
-    const cartVal = document.getElementById("cartValueInput").value;
-    if (cartVal < 10) {
-      return console.log("add surcharge");
-    } else if (cartVal >= 10) {
-      console.log("Delivery price is same");
-    }
+  const { takeCartVal } = useContext(CartContext);
+  const [input, setInput] = useState("");
+  const cartValHandler = (e) => {
+    e.preventDefault();
+    takeCartVal(input);
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    console.log("Input value", event.target.value);
+
+    setInput(value);
   };
   return (
     <div>
       <form>
         <h2> Delivery Fee Calculator </h2>
         <label> Cart Value </label>
-        <input type="text" placeholder=" " />
+        <input
+          type="text"
+          placeholder=" "
+          value={input}
+          onChange={handleInputChange}
+        />
         <span> Euro </span>
         <br />
         <br />
-        <button type="button" onClick={() => Calculate}>
+        <button type="button" onClick={cartValHandler}>
           {" "}
           Calculate Delivery price{" "}
         </button>
