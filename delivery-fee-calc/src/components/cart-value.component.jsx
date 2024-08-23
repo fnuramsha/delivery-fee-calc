@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CartContext } from "../contexts/cart.contexts";
 
 const CartValue = () => {
-  const { takeCartVal } = useContext(CartContext);
+  const { takeCartVal, deliveryPrice } = useContext(CartContext);
   const [input, setInput] = useState("");
   const cartValHandler = (e) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ const CartValue = () => {
 
         <br />
         <br />
-        <span> Delivery price: 0</span>
+        <span> Delivery price: {deliveryPrice}</span>
       </form>
     </div>
   );
