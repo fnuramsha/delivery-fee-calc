@@ -20,7 +20,7 @@ const CartValue = () => {
 
   const itemsHandler = (event) => {
     setInputNoOfItems(event.target.value);
-    console.log("No. Of items", event.target.value);
+    //console.log("No. Of items", event.target.value);
   };
 
   const deliveryPriceHandler = (e) => {
