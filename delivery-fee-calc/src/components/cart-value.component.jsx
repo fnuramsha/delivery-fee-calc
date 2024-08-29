@@ -42,7 +42,7 @@ const CartValue = () => {
         <span> m </span>
         <br />
         <br />
-        <span> No. of items </span>
+        <span> Amount of items </span>
         <input type="text" onChange={itemsHandler} />
         <br />
         <br />
