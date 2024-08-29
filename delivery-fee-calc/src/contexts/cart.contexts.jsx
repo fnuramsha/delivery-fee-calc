@@ -24,13 +24,42 @@ const calcCartVal = (cartVal, deliveryPrice, deliveryDistance, noOfItems) => {
 
   // Calculate No.of items
   let additionalItemCost = 0;
+
   if (noOfItems > 4) {
     additionalItemCost = (noOfItems - 4) * EXTRA_ITEM_CHARGE;
     console.log("No. of items", additionalItemCost);
   }
 
+  // Calculate Additional Bulk fee
+  let additionalBulkFee = 0;
+  if (noOfItems > 12) {
+    additionalBulkFee = 1.2;
+  }
+
+  // Calculate delivery price when Cart value is 0
+  if (cartVal >= 200) {
+    deliveryPrice = 0;
+    surchargeVal = 0;
+    additionalDistanceCost = 0;
+    additionalItemCost = 0;
+    additionalBulkFee = 0;
+  }
+
+  // Delivery fee validation
+  if (deliveryPrice > 15) {
+    alert("Delivery price can never be more than 15 euro");
+  }
+
   // Calculate Delivery price
-  deliveryPrice += surchargeVal + additionalDistanceCost + additionalItemCost;
+  deliveryPrice +=
+    surchargeVal +
+    additionalDistanceCost +
+    additionalItemCost +
+    additionalBulkFee;
+  // Delivery fee validation
+  if (deliveryPrice > 15) {
+    alert("Delivery price can never be more than 15 euro");
+  }
 
   console.log("Delivery Price", deliveryPrice);
 
