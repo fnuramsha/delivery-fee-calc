@@ -5,10 +5,11 @@ const CartValue = () => {
   const { takeCartVal, userInputValues, deliveryPrice, setUserInputValues } =
     useContext(CartContext);
 
+  // This function is used to update the userInputValues state
   const changeHandler = (event) => {
     setUserInputValues({
-      ...userInputValues,
-      [event.target.name]: event.target.value,
+      ...userInputValues, // Keep the existing values
+      [event.target.name]: event.target.value, // Update the specific field that changed
     });
   };
 

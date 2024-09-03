@@ -164,6 +164,8 @@ export const ContextProvider = ({ children }) => {
     setDeliveryPrice(updatedDeliveryPrice);
     // setDeliveryDistance(updatedDeliveryDistance);
     // setNoOfItems(updatedNoOfItems);
+
+    // Holds the values of the form inputs
     setUserInputValues({
       cartVal: updatedCartVal,
       deliveryDistance: updatedDeliveryDistance,
