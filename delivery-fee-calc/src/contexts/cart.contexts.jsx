@@ -1,4 +1,9 @@
 import { useState, createContext } from "react";
+const initialUserInputValues = {
+  cartVal: "",
+  deliveryDistance: "",
+  noOfItems: "",
+};
 // After optimzation
 const calcCartVal = (cartVal, deliveryPrice, deliveryDistance, noOfItems) => {
   const MIN_CART_VALUE = 10;
@@ -130,35 +135,47 @@ export const CartContext = createContext({
 });
 
 export const ContextProvider = ({ children }) => {
-  const [cartVal, setCartVal] = useState(0);
-  const [deliveryPrice, setDeliveryPrice] = useState(0);
-  const [deliveryDistance, setDeliveryDistance] = useState(1000);
-  const [noOfItems, setNoOfItems] = useState(0);
+  // const [cartVal, setCartVal] = useState("");
+  const [deliveryPrice, setDeliveryPrice] = useState("");
+  // const [deliveryDistance, setDeliveryDistance] = useState("");
+  // const [noOfItems, setNoOfItems] = useState("");
+  const [userInputValues, setUserInputValues] = useState(
+    initialUserInputValues
+  );
 
-  const takeCartVal = (cartVal, deliveryDistance, noOfItems) => {
+  const takeCartVal = () => {
+    // const result = calcCartVal(
+    //   cartVal,
+    //   deliveryPrice,
+    //   deliveryDistance,
+    //   noOfItems
+    // );
     const result = calcCartVal(
-      cartVal,
+      userInputValues.cartVal,
       deliveryPrice,
-      deliveryDistance,
-      noOfItems
+      userInputValues.deliveryDistance,
+      userInputValues.noOfItems
     );
     const updatedCartVal = result.cartVal;
     const updatedDeliveryPrice = result.deliveryPrice;
     const updatedDeliveryDistance = result.deliveryDistance;
     const updatedNoOfItems = result.noOfItems;
-    setCartVal(updatedCartVal);
+    // setCartVal(updatedCartVal);
     setDeliveryPrice(updatedDeliveryPrice);
-    setDeliveryDistance(updatedDeliveryDistance);
-    setNoOfItems(updatedNoOfItems);
+    // setDeliveryDistance(updatedDeliveryDistance);
+    // setNoOfItems(updatedNoOfItems);
+    setUserInputValues({
+      cartVal: updatedCartVal,
+      deliveryDistance: updatedDeliveryDistance,
+      noOfItems: updatedNoOfItems,
+    });
   };
 
   const value = {
-    cartVal,
-    setCartVal,
+    setUserInputValues,
     takeCartVal,
     deliveryPrice,
-    deliveryDistance,
-    noOfItems,
+    userInputValues,
   };
   return (
     <CartContext.Provider value={value}> {children} </CartContext.Provider>

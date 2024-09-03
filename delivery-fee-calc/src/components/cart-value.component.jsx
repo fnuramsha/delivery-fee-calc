@@ -1,49 +1,54 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../contexts/cart.contexts";
 
 const CartValue = () => {
-  const [inputCartValue, setInputCartValue] = useState("");
-  const [inputDistance, setInputDistance] = useState("");
-  const [inputNoOfItems, setInputNoOfItems] = useState("");
-  const { takeCartVal, deliveryPrice, deliveryDistance } =
+  const { takeCartVal, userInputValues, deliveryPrice, setUserInputValues } =
     useContext(CartContext);
 
   const changeHandler = (event) => {
-    setInputCartValue(event.target.value);
-    console.log("Cart Value", event.target.value);
-  };
-
-  const changeHandlerDistance = (event) => {
-    setInputDistance(event.target.value);
-    console.log("Delivery Distance", event.target.value);
-  };
-
-  const itemsHandler = (event) => {
-    setInputNoOfItems(event.target.value);
-    //console.log("No. Of items", event.target.value);
+    setUserInputValues({
+      ...userInputValues,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const deliveryPriceHandler = (e) => {
     e.preventDefault();
-    takeCartVal(inputCartValue, inputDistance, inputNoOfItems);
+    takeCartVal();
   };
+
   return (
     <div>
       <form>
         <h2>Delivery Fee Calculator</h2>
         <span> Cart Value </span>
-        <input type="text" onChange={changeHandler} />
+        <input
+          type="text"
+          onChange={changeHandler}
+          name="cartVal"
+          value={userInputValues.cartVal}
+        />
         <span> Euro </span>
         <br />
         <br />
 
         <span> Delivery Distance </span>
-        <input type="text" onChange={changeHandlerDistance} />
+        <input
+          type="text"
+          onChange={changeHandler}
+          name="deliveryDistance"
+          value={userInputValues.deliveryDistance}
+        />
         <span> m </span>
         <br />
         <br />
         <span> Amount of items </span>
-        <input type="text" onChange={itemsHandler} />
+        <input
+          type="text"
+          onChange={changeHandler}
+          name="noOfItems"
+          value={userInputValues.noOfItems}
+        />
         <br />
         <br />
 
