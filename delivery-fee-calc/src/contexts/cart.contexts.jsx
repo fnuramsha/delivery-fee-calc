@@ -49,21 +49,35 @@ const calcCartVal = (cartVal, deliveryPrice, deliveryDistance, noOfItems) => {
     additionalItemCost = 0;
     additionalBulkFee = 0;
   }
-
   // Delivery fee validation
   if (deliveryPrice > 15) {
-    alert("Delivery price can never be more than 15 euro");
+    deliveryPrice = 0;
   }
-
   // Calculate Delivery price
   deliveryPrice +=
     surchargeVal +
     additionalDistanceCost +
     additionalItemCost +
     additionalBulkFee;
-  // Delivery fee validation
-  if (deliveryPrice > 15) {
-    alert("Delivery price can never be more than 15 euro");
+
+  const currentDate = new Date();
+
+  const dayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const day = dayNames[currentDate.getDay()];
+  console.log(day);
+  const hours = currentDate.getHours();
+
+  if (day === "Wednesday" && hours >= "15" && hours <= "19") {
+    deliveryPrice = deliveryPrice * 1.2;
   }
 
   console.log("Delivery Price", deliveryPrice);
@@ -71,85 +85,17 @@ const calcCartVal = (cartVal, deliveryPrice, deliveryDistance, noOfItems) => {
   return { cartVal, deliveryPrice, deliveryDistance, noOfItems };
 };
 
-// Initial code
-// const calcCartVal = (cartVal, deliveryPrice, deliveryDistance, noOfItems) => {
-//   if (noOfItems >= 5) {
-//     if (deliveryDistance >= 1000) {
-//       if (cartVal < 10) {
-//         const surchargeVal = 10 - cartVal;
-//         console.log("Surcharge Value", surchargeVal);
-//         console.log("Delivery Distance input from user", deliveryDistance);
-//         const newDeliveryDistance = deliveryDistance - 1000;
-//         const result = newDeliveryDistance / 500;
-//         console.log("result", result);
-//         const calctDeliveryDistance = Math.ceil(result);
-//         console.log("after ceil value", calctDeliveryDistance);
-//         const calcNoOfItems = noOfItems - 4;
-//         console.log("calcNoOfItems", calcNoOfItems);
-//         const resultItems = calcNoOfItems * 0.5;
-//         console.log("No. of items", resultItems);
-
-//         deliveryPrice =
-//           deliveryPrice + surchargeVal + calctDeliveryDistance + resultItems;
-//         console.log("Delivery Price", deliveryPrice);
-//       } else {
-//         const newDeliveryDistance = deliveryDistance - 1000;
-//         const result = newDeliveryDistance / 500;
-//         console.log("result", result);
-//         const calctDeliveryDistance = Math.ceil(result);
-//         console.log("after ceil value", calctDeliveryDistance);
-//         const calcNoOfItems = noOfItems - 4;
-//         console.log("calcNoOfItems", calcNoOfItems);
-//         const resultItems = calcNoOfItems * 0.5;
-
-//         deliveryPrice = deliveryPrice + calctDeliveryDistance + resultItems;
-
-//         console.log("Case : 1 your value is more than 10");
-//       }
-//     }
-//   } else {
-//     if (deliveryDistance <= 1000) {
-//       if (cartVal < 10) {
-//         const surchargeVal = 10 - cartVal;
-//         console.log("Surcharge Value", surchargeVal);
-//         deliveryPrice = deliveryPrice + surchargeVal;
-//         console.log("Delivery Price", deliveryPrice);
-//       } else {
-//         const calcNoOfItems = noOfItems - 4;
-//         console.log("calcNoOfItems", calcNoOfItems);
-//         const resultItems = calcNoOfItems * 0.5;
-
-//         deliveryPrice = deliveryPrice + resultItems;
-
-//         console.log("your value is more than 10");
-//       }
-//     }
-//   }
-
-//   return { cartVal, deliveryPrice, deliveryDistance, noOfItems };
-// };
-
 export const CartContext = createContext({
   cartVal: 0,
   takeCartVal: () => {},
 });
 
 export const ContextProvider = ({ children }) => {
-  // const [cartVal, setCartVal] = useState("");
   const [deliveryPrice, setDeliveryPrice] = useState("");
-  // const [deliveryDistance, setDeliveryDistance] = useState("");
-  // const [noOfItems, setNoOfItems] = useState("");
   const [userInputValues, setUserInputValues] = useState(
     initialUserInputValues
   );
-
   const takeCartVal = () => {
-    // const result = calcCartVal(
-    //   cartVal,
-    //   deliveryPrice,
-    //   deliveryDistance,
-    //   noOfItems
-    // );
     const result = calcCartVal(
       userInputValues.cartVal,
       deliveryPrice,
@@ -160,10 +106,7 @@ export const ContextProvider = ({ children }) => {
     const updatedDeliveryPrice = result.deliveryPrice;
     const updatedDeliveryDistance = result.deliveryDistance;
     const updatedNoOfItems = result.noOfItems;
-    // setCartVal(updatedCartVal);
     setDeliveryPrice(updatedDeliveryPrice);
-    // setDeliveryDistance(updatedDeliveryDistance);
-    // setNoOfItems(updatedNoOfItems);
 
     // Holds the values of the form inputs
     setUserInputValues({
