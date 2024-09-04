@@ -2,8 +2,13 @@ import { useContext } from "react";
 import { CartContext } from "../contexts/cart.contexts";
 
 const CartValue = () => {
-  const { takeCartVal, userInputValues, deliveryPrice, setUserInputValues } =
-    useContext(CartContext);
+  const {
+    takeCartVal,
+    userInputValues,
+    deliveryPrice,
+    setUserInputValues,
+    initialUserInputValues,
+  } = useContext(CartContext);
 
   // This function is used to update the userInputValues state
   const changeHandler = (event) => {

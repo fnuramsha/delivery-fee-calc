@@ -114,6 +114,11 @@ export const ContextProvider = ({ children }) => {
       deliveryDistance: updatedDeliveryDistance,
       noOfItems: updatedNoOfItems,
     });
+    setUserInputValues({
+      cartVal: initialUserInputValues.cartVal,
+      deliveryDistance: initialUserInputValues.deliveryDistance,
+      noOfItems: initialUserInputValues.noOfItems,
+    });
   };
 
   const value = {
