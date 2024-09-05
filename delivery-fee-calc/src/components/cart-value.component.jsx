@@ -2,13 +2,8 @@ import { useContext } from "react";
 import { CartContext } from "../contexts/cart.contexts";
 
 const CartValue = () => {
-  const {
-    takeCartVal,
-    userInputValues,
-    deliveryPrice,
-    setUserInputValues,
-    initialUserInputValues,
-  } = useContext(CartContext);
+  const { takeCartVal, userInputValues, deliveryPrice, setUserInputValues } =
+    useContext(CartContext);
 
   // This function is used to update the userInputValues state
   const changeHandler = (event) => {
@@ -20,41 +15,60 @@ const CartValue = () => {
 
   const deliveryPriceHandler = (e) => {
     e.preventDefault();
-    takeCartVal();
+    const requiredFields = ["cartVal", "deliveryDistance", "noOfItems"];
+    requiredFields.forEach(function (field) {
+      if (!userInputValues[field]?.trim()) {
+        // The ! sign is used to negate the result of the condition. It checks for a "falsy" value, such as an empty string, null, or undefined.
+        // The ?. is optional chaining, which safely checks if userInputValues[field] exists before calling trim(), preventing an error if the field is undefined or null.
+        alert(`${field} is required`);
+      } else {
+        takeCartVal();
+      }
+    });
   };
 
   return (
     <div>
       <form>
         <h2>Delivery Fee Calculator</h2>
-        <span> Cart Value </span>
-        <input
-          type="text"
-          onChange={changeHandler}
-          name="cartVal"
-          value={userInputValues.cartVal}
-        />
-        <span> Euro </span>
-        <br />
-        <br />
+        <label>
+          <span> Cart Value </span>
+          <input
+            type="text"
+            placeholder="Enter numbers only"
+            onChange={changeHandler}
+            name="cartVal"
+            value={userInputValues.cartVal}
+          />
+          <span> Euro </span>
+          <br />
+          <br />
+        </label>
+        <label>
+          <span> Delivery Distance </span>
+          <input
+            type="text"
+            placeholder="Enter numbers only"
+            onChange={changeHandler}
+            name="deliveryDistance"
+            value={userInputValues.deliveryDistance}
+          />
+          <span> m </span>
+        </label>
 
-        <span> Delivery Distance </span>
-        <input
-          type="text"
-          onChange={changeHandler}
-          name="deliveryDistance"
-          value={userInputValues.deliveryDistance}
-        />
-        <span> m </span>
         <br />
         <br />
-        <span> Amount of items </span>
-        <input
-          type="text"
-          onChange={changeHandler}
-          name="noOfItems"
-          value={userInputValues.noOfItems}
-        />
+        <label>
+          <span> Amount of items </span>
+          <input
+            type="text"
+            placeholder="Enter numbers only"
+            onChange={changeHandler}
+            name="noOfItems"
+            value={userInputValues.noOfItems}
+          />
+        </label>
+
         <br />
         <br />
 
